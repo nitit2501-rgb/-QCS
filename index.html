@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สินค้าอุปกรณ์เปลี่ยนทดแทนในบ้าน</title>
-    <!-- Bootstrap CSS ทำให้ดูสวย รองรับมือถือ -->
+    <title>สเปคห้องชุด - อุปกรณ์เปลี่ยนทดแทน (อัปเดต)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background-color: #f8f9fa; font-family: 'Sarabun', sans-serif; }
@@ -13,33 +12,54 @@
         .product-item { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; }
         .product-item:hover { background-color: #e9ecef; }
         .spec-box { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .spec-detail ul { padding-left: 20px; }
+        .spec-detail li { margin-bottom: 8px; }
+        .spec-detail img { max-width: 150px; height: auto; border: 1px solid #ddd; padding: 5px; background: #fff; }
     </style>
 </head>
 <body>
     <div class="container py-5">
         <!-- หัวข้อเว็บ -->
         <div class="text-center mb-5">
-            <h1 class="display-5 fw-bold text-primary">📋 อุปกรณ์เปลี่ยนทดแทนในบ้าน</h1>
-            <p class="text-muted">เลือกหมวดหมู่ → คลิกชื่อสินค้าเพื่อดูรายละเอียดสเปค</p>
+            <h1 class="display-5 fw-bold text-primary">📋 สเปคห้องชุด - อุปกรณ์เปลี่ยนทดแทน (อัปเดต)</h1>
+            <p class="text-muted">เลือกหมวดหมู่ → คลิกชื่อสินค้าเพื่อดูรายละเอียด</p>
         </div>
 
         <!-- หน้าเลือกหมวดหลัก -->
         <div id="page-home" class="row g-4">
-            <!-- การ์ดหมวดห้องน้ำ -->
-            <div class="col-md-6">
+            <!-- หมวดห้องน้ำ -->
+            <div class="col-md-6 col-lg-4">
                 <div class="card category-card bg-info-subtle h-100" onclick="showCategory('bathroom')">
                     <div class="card-body text-center p-4">
                         <h2 class="card-title">🛁 หมวดห้องน้ำ</h2>
-                        <p class="card-text">ก๊อกน้ำ, สายฉีดชำระ, สายน้ำดี, สายน้ำร้อน, ฝักบัว</p>
+                        <p class="card-text">สายฉีดชำระ, สต๊อปวาล์ว, ฝักบัว, กระเบื้อง, ก๊อกอ่างล้างหน้า, สายน้ำดี, ก็อกผสม, เครื่องทำน้ำร้อน, ยางรอง</p>
                     </div>
                 </div>
             </div>
-            <!-- การ์ดหมวดห้องนอน -->
-            <div class="col-md-6">
-                <div class="card category-card bg-success-subtle h-100" onclick="showCategory('bedroom')">
+            <!-- หมวดห้องครัว -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card category-card bg-warning-subtle h-100" onclick="showCategory('kitchen')">
                     <div class="card-body text-center p-4">
-                        <h2 class="card-title">🛏️ หมวดห้องนอน</h2>
-                        <p class="card-text">หลอดไฟ, ปลั๊กไฟ</p>
+                        <h2 class="card-title">🍳 หมวดห้องครัว</h2>
+                        <p class="card-text">สายน้ำดี, หลอดไฟเครื่องดูดควัน, หัวก็อกน้ำ</p>
+                    </div>
+                </div>
+            </div>
+            <!-- หมวดห้องทั่วไป -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card category-card bg-success-subtle h-100" onclick="showCategory('general')">
+                    <div class="card-body text-center p-4">
+                        <h2 class="card-title">💡 หมวดห้องทั่วไป</h2>
+                        <p class="card-text">ปลั๊กไฟ, หลอดไฟ, Digital doorlock</p>
+                    </div>
+                </div>
+            </div>
+             <!-- หมวดสี -->
+             <div class="col-md-6 col-lg-4">
+                <div class="card category-card bg-secondary-subtle h-100" onclick="showCategory('paint')">
+                    <div class="card-body text-center p-4">
+                        <h2 class="card-title">🎨 หมวดสี</h2>
+                        <p class="card-text">สีผนังภายใน, สีฝ้าเพดาน, สีภายนอกระเบียง</p>
                     </div>
                 </div>
             </div>
@@ -52,97 +72,174 @@
             <div id="product-list" class="list-group mb-4"></div>
         </div>
 
-        <!-- หน้าแสดงสเปคสินค้า -->
+        <!-- หน้าแสดงรายละเอียดสินค้า -->
         <div id="page-spec" class="d-none">
             <button class="btn btn-secondary mb-3" onclick="goBackCategory()">⬅️ กลับไปรายการสินค้า</button>
             <div class="spec-box">
                 <h4 id="spec-name" class="text-primary mb-3"></h4>
-                <div id="spec-detail"></div>
+                <div id="spec-detail" class="spec-detail"></div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ฐานข้อมูลสินค้าและสเปค (เพิ่ม/แก้ไขได้ตามต้องการ)
+        // ข้อมูลสินค้าที่อัปเดตล่าสุดจากไฟล์ Excel
         const productData = {
             bathroom: {
                 name: "🛁 หมวดห้องน้ำ",
                 products: {
-                    faucet: {
-                        name: "ก๊อกน้ำ",
-                        spec: `<ul>
-                            <li>วัสดุ: ทองเหลืองชุบโครเมียม ทนทาน ไม่เป็นสนิม</li>
-                            <li>ขนาดข้อต่อ: มาตรฐาน 1/2 นิ้ว</li>
-                            <li>ประเภท: ก๊อกเดี่ยว/ก๊อกผสมร้อน-เย็น</li>
-                            <li>แรงดันน้ำรองรับ: 0.5 - 10 บาร์</li>
-                            <li>คุณสมบัติ: เปิดปิดนุ่มนวล ป้องกันการรั่วซึม</li>
-                        </ul>`
-                    },
                     sprayHose: {
                         name: "สายฉีดชำระ",
                         spec: `<ul>
-                            <li>วัสดุ: สายสแตนเลสหุ้มพลาสติกใน</li>
-                            <li>ความยาว: 1.2 - 1.5 เมตร ยืดหยุ่นได้</li>
-                            <li>ข้อต่อ: เกลียวมาตรฐาน 1/2 นิ้ว</li>
-                            <li>หัวฉีด: ปรับระดับน้ำได้ หลายรูปแบบ</li>
-                            <li>ทนแรงดันสูง ไม่ฉีกขาดง่าย</li>
+                            <li>รายละเอียด: สายฉีดรุ่นมาตราฐาน ทนแรงดันสูง</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
                         </ul>`
                     },
-                    coldWaterPipe: {
-                        name: "สายน้ำดี",
+                    stopValve: {
+                        name: "สต๊อปวาล์ว",
                         spec: `<ul>
-                            <li>วัสดุ: พีวีซี/สแตนเลส/ทองเหลืองใน</li>
-                            <li>ใช้สำหรับ: น้ำอุณหภูมิปกติเท่านั้น</li>
-                            <li>ขนาดมาตรฐาน: 1/2 นิ้ว</li>
-                            <li>ความยาว: เลือกได้ตามความเหมาะสม</li>
-                            <li>ทนความดันได้ดี ไม่เป็นสนิม</li>
+                            <li>รายละเอียด: รุ่น 2 ทาง COTTO รุ่น CT198(HM)</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
                         </ul>`
                     },
-                    hotWaterPipe: {
-                        name: "สายน้ำร้อน",
-                        spec: `<ul>
-                            <li>วัสดุ: วัสดุทนความร้อนสูง (สแตนเลส/ยางทนร้อน)</li>
-                            <li>ทนอุณหภูมิได้สูงสุด: 80-100 องศาเซลเซียส</li>
-                            <li>ขนาดข้อต่อ: 1/2 นิ้ว มาตรฐานทั่วไป</li>
-                            <li>เสริมชั้นฉนวนกันความร้อน ลดการสูญเสียความร้อน</li>
-                            <li>ทนแรงดันสูง ไม่เสียรูปเมื่อเจอน้ำร้อน</li>
-                        </ul>`
-                    },
-                    showerHead: {
+                    showerCot667n: {
                         name: "ฝักบัว",
                         spec: `<ul>
-                            <li>วัสดุ: พลาสติกคุณภาพดี/สแตนเลส/อลูมิเนียม</li>
-                            <li>รูปแบบน้ำ: ปรับได้หลายแบบ (น้ำละออง, น้ำพุ่ง, น้ำกว้าง)</li>
-                            <li>ขนาดรูน้ำ: ป้องกันการอุดตันจากตะกรัน</li>
-                            <li>ประหยัดน้ำได้ดี คงแรงน้ำสม่ำเสมอ</li>
-                            <li>ติดตั้งง่าย เข้ากับสายฝักบัวมาตรฐาน</li>
+                            <li>รายละเอียด: COTTO รุ่น CT667N</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
+                        </ul>`
+                    },
+                    tileWallBeeline: {
+                        name: "กระเบื้องผนังห้องน้ำ",
+                        spec: `<ul>
+                            <li>รายละเอียด: COTTO รุ่น Beeline White ขนาด 0.20*0.40 ม.</li>
+                            <li>รายละเอียด: COTTO รุ่น Beeline Mocha ขนาด 0.20*0.40 ม.</li>
+                            <li>หมายเหตุ: ไม่มีผลิตแล้ว ต้องเทียบรุ่นอื่น</li>
+                        </ul>`
+                    },
+                    tileFloorRci: {
+                        name: "กระเบื้องพื้นห้องน้ำ",
+                        spec: `<ul>
+                            <li>รายละเอียด: RCI รุ่น Lumina Ash External ขนาด 0.30*0.60 ม.</li>
+                        </ul>`
+                    },
+                    faucetBasinCot1052: {
+                        name: "ก๊อกอ่างล้างหน้า",
+                        spec: `<ul>
+                            <li>รายละเอียด: COTTO รุ่น CT1052</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
+                        </ul>`
+                    },
+                    coldWaterPipeWC: {
+                        name: "สายน้ำดี-ชักโครก",
+                        spec: `<ul>
+                            <li>รายละเอียด: ความยาว 12 นิ้ว</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
+                        </ul>`
+                    },
+                    faucetMixerShowerCot2106: {
+                        name: "ก็อกผสม น้ำร้อน/น้ำเย็น",
+                        spec: `<ul>
+                            <li>รายละเอียด: ก็อกผสมยืนอาบน้ำ COTTO รุ่น CT2106C30X</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
+                        </ul>`
+                    },
+                    waterHeaterDhm6: {
+                        name: "เครื่องทำน้ำร้อน",
+                        spec: `<ul>
+                            <li>รายละเอียด: เครื่องทำน้ำร้อน STIEBEL ELTRON รุ่น DHM6 6000W *ขาว</li>
+                            <li>หมายเหตุ: รุ่นนี้ปรับระดับความร้อนไม่ได้</li>
+                        </ul>`
+                    },
+                    tankSealC9374: {
+                        name: "ยางรองถังน้ำชักโครก",
+                        spec: `<ul>
+                            <li>รายละเอียด: ยางรองถังน้ำชักโครก C9374</li>
+                        </ul>`
+                    },
+                    tankSealCot: {
+                        name: "ยางรองหม้อน้ำ",
+                        spec: `<ul>
+                            <li>รายละเอียด: COTTO</li>
                         </ul>`
                     }
                 }
             },
-            bedroom: {
-                name: "🛏️ หมวดห้องนอน",
+            kitchen: {
+                name: "🍳 หมวดห้องครัว",
                 products: {
-                    lightBulb: {
-                        name: "หลอดไฟ",
+                    coldWaterPipeSink: {
+                        name: "สายน้ำดี-อ่างล้างจาน",
                         spec: `<ul>
-                            <li>ประเภท: LED ประหยัดพลังงานมากกว่าหลอดธรรมดา</li>
-                            <li>กำลังวัตต์: 5W, 7W, 9W, 12W เลือกใช้ตามความเหมาะสม</li>
-                            <li>ฐานหลอด: E27 มาตรฐานทั่วไป</li>
-                            <li>แสง: สีขาวนวล/สีเหลืองนวล ไม่ทำให้ปวดตา</li>
-                            <li>อายุการใช้งานยาวนาน ไม่ร้อนมาก</li>
+                            <li>รายละเอียด: ความยาว 18 นิ้วขึ้นไป</li>
+                            <li>หมายเหตุ: ท่อ 4 หุน (หรือขนาด 1/2 นิ้ว)</li>
                         </ul>`
                     },
-                    electricSocket: {
-                        name: "ปลั๊กไฟ",
+                    hoodLightPhilips: {
+                        name: "หลอดไฟเครื่องดูดควัน",
                         spec: `<ul>
-                            <li>มาตรฐาน: รองรับปลั๊กไทย/สากล</li>
-                            <li>วัสดุ: พลาสติกทนไฟ คุณภาพสูง ป้องกันไฟช็อต</li>
-                            <li>รองรับกระแสไฟ: 16A 250V</li>
-                            <li>มีแผ่นปิดช่องปลั๊ก ป้องกันเด็กหยิบจับ</li>
-                            <li>ติดตั้งแน่นหนา สัมผัสไฟแน่นดี ไม่หลวมง่าย</li>
+                            <li>รายละเอียด: หลอดไฟ LED ฟีลาเมนต์ 4 วัตต์ Warm White</li>
+                            <li>หมายเหตุ: PHILIPS รุ่น CLASSIC4W B35 E14</li>
+                        </ul>`
+                    },
+                    faucetBubbler: {
+                        name: "หัวก็อกน้ำ อ่างล้างจาน",
+                        spec: `<ul>
+                            <li>รายละเอียด: G1/2(Thick) Female Bubbler</li>
+                            <li>หมายเหตุ: แล้วแต่รุ่นของก็อกที่ลูกบ้านใช้ แต่โดยหลักจะเป็น 1/2</li>
+                            <li>รูปภาพ: <img src="https://via.placeholder.com/150/CCCCCC/FFFFFF?text=Image+1" alt="รูปภาพหัวก็อกน้ำ 1"></li>
+                        </ul>`
+                    }
+                }
+            },
+            general: {
+                name: "💡 หมวดห้องทั่วไป",
+                products: {
+                    plugSchneiderVivace: {
+                        name: "ปลั๊ก เต้าเสียบ",
+                        spec: `<ul>
+                            <li>รายละเอียด: Schneider Electric ชุดเต้ารับเดี่ยว 3ขา มีม่านนิรภัย สีเงินอลูมิเนียม รุ่น Vivace</li>
+                            <li>หมายเหตุ: KB426UEST_AS</li>
+                        </ul>`
+                    },
+                    lightBulbGeneral: {
+                        name: "หลอดไฟทั่วไป",
+                        spec: `<ul>
+                            <li>รายละเอียด: ขั้ว E27 ไม่เกิน 15 วัตต์</li>
+                        </ul>`
+                    },
+                    digitalDoorLockYale: {
+                        name: "Digital doorlock",
+                        spec: `<ul>
+                            <li>รายละเอียด: Yale YDR323 Digital Door Lock</li>
+                            <li>หมายเหตุ: เป็นรุ่นเดิมที่อาจจะไม่มีขายแล้ว (ใช้ถ่าน AA จำนวน 4 ก้อน)</li>
+                        </ul>`
+                    }
+                }
+            },
+            paint: {
+                name: "🎨 หมวดสี",
+                products: {
+                    paintWallInteriorA1000: {
+                        name: "สีผนังภายในห้อง",
+                        spec: `<ul>
+                            <li>รายละเอียด: TOA 4SEASON ทีโอเอ โฟร์ซีซั่น ภายใน</li>
+                            <li>หมายเหตุ: รหัส A1000</li>
+                        </ul>`
+                    },
+                    paintCeilingA7000: {
+                        name: "สีฝ้าเพดานในห้อง",
+                        spec: `<ul>
+                            <li>รายละเอียด: TOA 4SEASON ทีโอเอ โฟร์ซีซั่น ภายใน</li>
+                            <li>หมายเหตุ: รหัส A7000</li>
+                        </ul>`
+                    },
+                    paintBalcony8255: {
+                        name: "สีผนังภายนอกระเบียง",
+                        spec: `<ul>
+                            <li>รายละเอียด: TOA ซุปเปอร์ชิลด์ กึ่งเงา</li>
+                            <li>หมายเหตุ: รหัส #8255 (จะต้องเทียบสี อาจจะไม่ตรงของเดิม 100%)</li>
                         </ul>`
                     }
                 }
